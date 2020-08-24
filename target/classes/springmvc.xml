@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+        <!-- 文件上传,id必须设置为multipartResolver -->
+		<bean id="multipartResolver"
+		    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		   
+		    <!-- 默认编码 -->  
+        	<property name="defaultEncoding" value="utf-8" />  
+    	
+		     <!-- 文件大小最大值 -->  
+	        <property name="maxUploadSize" value="10485760000" />    
+	        <!-- 内存中的最大值 -->  
+	        <property name="maxInMemorySize" value="40960"/>    
+		</bean>
+        	
+        <!-- 扫描@Controler  @Service   -->
+        <context:component-scan base-package="com.xiaozheng"/>
+        
+        <!-- 处理器映射器 -->
+<!--         <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/> -->
+        <!-- 处理器适配器 -->
+<!--         <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/> -->
+        <!-- 注解驱动 -->
+        <mvc:annotation-driven />
+   
+        <!-- 视图解释器 -->
+        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        	<property name="prefix" value="/WEB-INF/jsp/"/>
+        	<property name="suffix" value=".jsp"/>
+        </bean>
+        
+        <mvc:interceptors>
+		  <mvc:interceptor>
+		   <mvc:mapping path="/**" />
+		   <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+		  </mvc:interceptor>
+		  <mvc:interceptor>
+			  <mvc:mapping path="/**" />
+			  <bean class="com.xiaozheng.recruitment.interceptor.UserInterceptor" />
+		  </mvc:interceptor>
+		
+		</mvc:interceptors>
+        
+       	<!-- 过滤下载路径的所有内容 -->
+		<mvc:resources mapping="/static/**" location="/static/" />
+		<!-- 过滤所有的css -->
+		<mvc:resources mapping="/static/**" location="/css/" />
+		<!-- 过滤所有的js -->
+		<mvc:resources mapping="/static/**" location="/js/" />
+		<!-- 过滤所有的图片 -->
+		<mvc:resources mapping="/static/**" location="/images/" />
+		<mvc:resources mapping="/static/**" location="/img/" />
+  	    <mvc:resources mapping="/static/**" location="/**" />
+	 
+       
+       	<!-- 使用默认的servlet -->
+       	<mvc:default-servlet-handler/>
+   </beans>

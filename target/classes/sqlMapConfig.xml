@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 设置别名 -->
+	<typeAliases>
+		<!-- 2. 指定扫描包，会把包内所有的类都设置别名，别名的名称就是类名，大小写不敏感 -->
+		<package name="com.xiaozheng.recruitment.pojo" />
+	</typeAliases>
+	
+	<!-- 和spring整合后 environments配置将废除 -->
+    <!--默认的环境ID(default=development),每个enviroment元素定义的环境(id="development"),
+    其实环境的ID是可以随意命名的，建议简洁有意义。而默认环境一定要匹配定义的其中一个环境的ID
+    -->
+    <!--总结：default 和id值需要相同，名字任取。但是要简介。参考我的命名-->
+    <!-- <environments default="development">
+        <environment id="development">
+            
+                JDBC:这个配置就是直接使用了JDBC的提交和回滚设置，它依赖于从数据源得到的连接来管理事物范围
+           
+            使用jdbc事务管理
+            <transactionManager type="JDBC" />
+
+            数据库连接池
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver" />
+                <property name="url"
+                    value="jdbc:mysql://localhost:3306/jpa?characterEncoding=utf-8" />
+                <property name="username" value="root" />
+                <property name="password" value="" />
+            </dataSource>
+        </environment>
+    </environments>
+     -->
+    <!-- 加载映射文件 -->
+    <mappers>
+		<package name="com.xiaozheng.recruitment.dao"/>
+	</mappers>
+</configuration>
